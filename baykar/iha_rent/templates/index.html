@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-between">
+        <div class="col-auto">
+            <h1 class="h3">Rental Detail List</h1>
+        </div>
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary btn-lg" onclick="logOut()">Exit</button>
+        </div>
+    </div>
+    
+    <div class="card shadow-sm mt-3">
+        <div class="card-body">
+            <table id="userRentlist" class="display table table-striped" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>IHA Brand</th>
+                        <th>IHA Model</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </table>
+            <button type="button" class="btn btn-primary btn-lg mt-3" onclick="showIhaRentTable()">Rent New IHA</button>
+        </div>
+    </div>
+    
+    <div id="ihaRentTableContainer" class="card shadow-sm mt-3" style="display: none;">
+        <div class="card-body">
+            <h2 class="h5">IHA Rental Details</h2>
+            <table id="ihaRentlist" class="display table table-striped" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>Brand</th>
+                        <th>Model</th>
+                        <th>Category</th>
+                        <th>Height</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Tarih seçici için gerekli modallar -->
+<div id="datePickerModal" style="display: none;" title="Tarih Seç">
+    <label for="startDate">Start Date:</label>
+    <input type="text" id="startDate" class="datetimepicker form-control">
+    <label for="endDate">End Date:</label>
+    <input type="text" id="endDate" class="datetimepicker form-control">
+    <button type="button" class="btn btn-primary mt-2" onclick="userAddRentRecords()">Create Reservation</button>
+</div>
+
+<!-- Düzenleme Modalı -->
+<div id="editModal" style="display: none;" title="Kaydı Düzenle">
+    <form id="editForm">
+        <input type="hidden" id="editRecordId">
+        <input type="hidden" id="editUserId" class="form-control">
+        <label for="editIhaId">IHA:</label>
+        <select id="editIhaId" class="form-control"></select>
+        <label for="editStartDate">Start Date:</label>
+        <input type="text" id="editStartDate" class="datetimepicker form-control">
+        <label for="editEndDate">End Date:</label>
+        <input type="text" id="editEndDate" class="datetimepicker form-control">
+        <button type="button" class="btn btn-primary mt-2" onclick="saveEditRecord()">Save</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script>
+    var csrfToken = "{{ csrf_token }}";
+    var usersDataUrl = "{% url 'users_data' %}";
+    var userRentDataUrl = "{% url 'user_rent_data' %}";
+    var ihaDataUrl = "{% url 'iha_data' %}";
+    var rentDataUrl = "{% url 'rent_data' %}";
+    var addRentRecord = "{% url 'add_rent_record' %}";
+    var deleteRentRecord = "{% url 'delete_rent_record' %}";
+    var updateRentRecordUrl = "{% url 'update_rent_record' %}";
+    var getAllIhas = "{% url 'get_all_ihas' %}";
+    var logOutUrl = "{% url 'logout' %}";
+</script>
+<script src="{% static 'js/index.js' %}"></script>
+<script src="{% static 'js/iha_rent_process.js' %}"></script>
+<script src="{% static 'js/auth_process.js' %}"></script>
+
+{% endblock %}

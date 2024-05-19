@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Add IHA
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h1 class="h3">Admin IHA Add Screen</h1>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="brand" placeholder="Brand">
+                            <label for="brand">Brand</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="model" placeholder="Model">
+                            <label for="model">Model</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="height" placeholder="Height">
+                            <label for="height">Height</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="category" placeholder="Category">
+                            <label for="category">Category</label>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-lg w-100" onclick="addIHA()">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var adminAddIhaApiUrl = "{% url 'admin_ihaAdd_api' %}";
+    var adminHomeUrl = "{% url 'admin_home' %}";
+</script>
+<script src="{% static 'js/index.js' %}"></script>
+<script src="{% static 'js/iha_rent_process.js' %}"></script>
+{% endblock %}

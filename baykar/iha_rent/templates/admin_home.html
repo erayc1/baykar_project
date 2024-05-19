@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Admin Home
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-between mb-3">
+        <div class="col-auto">
+            <h1 class="h3">Users List</h1>
+        </div>
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary btn-lg" onclick="logOutAdmin()">Exit</button>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-3">
+        <div class="card-body">
+            <table id="userlist" class="display table table-striped" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Is Admin</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div class="row justify-content-between mb-3">
+        <div class="col-auto">
+            <h1 class="h3">IHA List</h1>
+        </div>
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary btn-lg" onclick="window.location.href = '/admin-iha-add'">Add New IHA</button>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-3">
+        <div class="card-body">
+            <table id="ihalist" class="display table table-striped" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>Brand</th>
+                        <th>Model</th>
+                        <th>Category</th>
+                        <th>Height</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <h1 class="h3">Rental Detail List</h1>
+    <div class="card shadow-sm mb-3">
+        <div class="card-body">
+            <table id="rentlist" class="display table table-striped" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>IHA Brand</th>
+                        <th>IHA Model</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Düzenleme Modalı -->
+<div id="editIhaModal" style="display: none;" title="Edit IHA">
+    <form id="editIhaForm">
+        <input type="hidden" id="editIhaId">
+        <label for="editBrand">Brand:</label>
+        <input type="text" id="editBrand" class="form-control">
+        <label for="editModel">Model:</label>
+        <input type="text" id="editModel" class="form-control">
+        <label for="editCategory">Category:</label>
+        <input type="text" id="editCategory" class="form-control">
+        <label for="editHeight">Height:</label>
+        <input type="number" id="editHeight" class="form-control">
+        <button type="button" class="btn btn-primary mt-2" onclick="saveEditIha()">Save</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script>
+    var usersDataUrl = "{% url 'users_data' %}";
+    var csrfToken = "{{ csrf_token }}";
+    var ihaDataUrl = "{% url 'iha_data' %}";
+    var rentDataUrl = "{% url 'rent_data' %}";
+    var updateIhaUrl = "{% url 'update_iha' %}";
+    var deleteIhaUrl = "{% url 'delete_iha' %}";
+    var logOutAdminUrl = "{% url 'logout_admin' %}";
+</script>
+<script src="{% static 'js/iha_rent_process.js' %}"></script>
+<script src="{% static 'js/auth_process.js' %}"></script>
+<script src="{% static 'js/index.js' %}"></script>
+
+{% endblock %}
